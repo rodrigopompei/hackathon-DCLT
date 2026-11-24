@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: postgres_hackthon_service
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: new_hackthon
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./ngo-service/db/00-create-databases.sql:/docker-entrypoint-initdb.d/00-create-databases.sql
+      - ./donation-service/db/init.sql:/docker-entrypoint-initdb.d/01-init.sql
+
+volumes:
+  pgdata:
